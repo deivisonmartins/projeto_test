@@ -1,0 +1,90 @@
+package stepDefination;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class SmokeTest {
+	
+	WebDriver driver = new FirefoxDriver();
+	long temp_static = 6000L;
+	
+	
+	@Given("^Should I access the airbnb homepage$")
+	public void should_I_access_the_airbnb_homepage() throws Throwable {
+	   
+		driver.get("http://www.airbnb.com.br");
+				
+		// maximize the browser screen
+		this.driver.manage().window().maximize();		
+		Thread.sleep(6000L);
+	}
+
+	@When("^I must do to search for places in Manaus$")
+	public void i_must_do_to_search_for_places_in_Manaus() throws Throwable {
+		
+		//click the search input
+		WebElement clickInput = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='site-content']/div[1]/div/div/div/div[2]/div/div/div/div/form/div[1]")));
+		clickInput.click();		
+		clickInput.sendKeys("Manaus");
+		
+		//search button
+		WebElement button = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='site-content']/div[1]/div/div/div/div[2]/div/div/div/div/form/div[2]/button")));
+		button.click();
+	}
+
+	@Then("^I have to filter by date$")
+	public void i_have_to_filter_by_date() throws Throwable {
+		
+		
+		
+		WebElement button = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='menuItemComponent-date_picker']/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div[3]/div/div")));
+		
+		//filter button by date
+		//WebElement button = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(.,'Datas')]")));
+		button.click();
+		
+		//go to the specific month, January
+		for (int i = 1; i == 10; i++) {
+			
+			WebElement buttonDate = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='_121ogl43 firepath-matching-node']")));
+			buttonDate.click();
+		}
+		
+		//inform the start day
+		WebElement buttonDateDayIni = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='menuItemComponent-date_picker']/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div[3]/div/table/tbody/tr[1]/td[2]")));
+		buttonDateDayIni.click();
+		
+		//inform the final day
+		WebElement buttonDateDayFim = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='menuItemComponent-date_picker']/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div[3]/div/table/tbody/tr[5]/td[4]")));
+		buttonDateDayFim.click();
+		
+		//apply button
+		WebElement buttonDateDayAplic = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='menuItemComponent-date_picker']/div/div/div[2]/div/div[2]/div/span/button")));
+		buttonDateDayAplic.click();
+		
+   	}
+
+	@Then("^I should check the details of my return$")
+	public void i_should_check_the_details_of_my_return() throws Throwable {
+		
+		// see the image of the place
+		for (int i = 1; i == 3; i++) {
+		
+			WebElement buttonDetal = (new WebDriverWait(driver, temp_static)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='_l96o85y']")));
+			buttonDetal.click();			
+		}
+	   
+		//close the browser
+		driver.quit();
+	}
+	
+	
+}
